@@ -1,0 +1,49 @@
+.loginSection{
+    background-image:linear-gradient(180deg,#081734,#0d1628 73px,#0e1420 168px,#0f1014 256px,#0f1014);
+}
+.LoginContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding-top: 40px;
+    padding-bottom: 48px;
+}
+
+.LoginContainer h1{
+    font-size: 28px;
+    color: #e1e6f0;
+}
+
+.LoginContainer p{
+    color: #8f98b2;
+}
+.LoginContainer img{
+    margin-bottom: 24px;
+}
+.login_Head{
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.primaryBtn{
+    background-image: linear-gradient(93.87deg,#095ae6,#062794);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    padding: 12px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    font-weight: 600;
+    max-width: 15rem;
+    cursor: pointer;
+}
