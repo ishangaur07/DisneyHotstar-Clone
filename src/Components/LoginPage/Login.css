@@ -44,6 +44,45 @@
     flex-direction: row;
     width: 100%;
     font-weight: 600;
-    max-width: 15rem;
+    width: 15rem;
     cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+.primaryBtn:hover{
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.384);
+}
+.loginHeader{
+    padding: 56px 56px 0 56px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.secondaryBtn{
+    background: #ffffff14;
+    color: white;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    align-items: center;
+    display: flex;
+    gap: 9px;
+    width: 15rem;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    
+}
+
+.secondaryBtn:hover{
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.384);
+}
+
+
+.secondaryBtn img{
+    width: 24px;
 }

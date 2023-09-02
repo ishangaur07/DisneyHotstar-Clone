@@ -7,7 +7,7 @@ const routes = createBrowserRouter([
     path:"/",
     children:[
       {path:"/",element:<h1>Hello ji saariya ne</h1>},
-      {path:"/login",element:<Login></Login>}
+      {path:"/login",element:<Login></Login>},
     ]
   }
 ])
