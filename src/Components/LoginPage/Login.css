@@ -86,3 +86,97 @@
 .secondaryBtn img{
     width: 24px;
 }
+.LoginContainer.blurred {
+    filter: blur(5px); /* Apply a blur effect to the LoginContainer */
+    pointer-events: none; /* Allow clicks to pass through the blurred area */
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Darkened background with transparency */
+    backdrop-filter: blur(5px); /* Apply a blur effect to the background */
+    z-index: 999; /* Ensure it appears above other content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+.modal{
+    position: fixed;
+    background-color: #16181f;
+    height: 30.5rem;
+    width: 54rem;
+    border-radius: 12px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    border-radius: 12px;
+}
+.combineWrapper{
+    width: 100%;
+    display: flex;
+    height: 100%;
+}
+.modalImage{
+    background-image: url("https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2022/01/IMDb-list-of-10-most-anticipated-films-of-2022.jpg?fit=1200%2C900&ssl=1");
+    width:40%;
+    height: 100%;
+    background-position: center;
+    background-size: contain;
+}
+
+
+.modal-content{
+    width: 60%;
+    position: relative;
+    min-height: 21.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 56px;
+    padding-right: 50px;
+}
+
+.close{
+   
+    cursor: pointer;
+    margin-top: 20px;
+    margin-right: 24px;
+    color: #707a94;
+    position: absolute;
+    right: 0;
+    z-index: 10;
+}
+
+
+.close svg{
+    width: 2rem;
+    height: 2rem;
+}
+
+.modal-content h2{
+    font-size: 20px;
+    letter-spacing: -0.2px;
+    line-height: 24px;
+    font-weight: 600;
+    color: #e1e6f0;
+}
+
+.helpContent{
+    text-align: center;
+    color: #8f98b2;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.helpContent a{
+    color: #3586f0;
+    font-weight: 600;
+}
