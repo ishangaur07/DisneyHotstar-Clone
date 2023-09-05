@@ -1,0 +1,76 @@
+/* Reset some default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Style for the sidebar */
+.sidebar {
+  
+    height: 100%;
+    background-color: #070707;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style for the logo */
+.logo {
+    padding: 20px;
+  
+}
+/* Style for the logo */
+.logo img {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Style for the navigation menu */
+.nav {
+    list-style: none;
+    padding: 0;
+    margin: auto;
+    
+}
+
+.nav li {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+
+
+/* Style for the content area */
+.content {
+    margin-left: 250px; /* Width of the sidebar */
+    padding: 20px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+        padding-top: 60px; /* Space for the logo */
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}

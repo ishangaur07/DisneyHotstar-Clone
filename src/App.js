@@ -2,12 +2,13 @@ import './App.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Login from './Components/LoginPage/Login';
 import MpLogin from './Components/LoginPage/MpLogin';
+import HomePage from './Components/HomePage/HomePage';
 
 const routes = createBrowserRouter([
   {
     path:"/",
     children:[
-      {path:"/",element:<h1>Hello ji saariya ne</h1>},
+      {path:"/",element:<HomePage></HomePage>},
       {path:"/login",element:<Login></Login>},
       {path:"#mp-login",element:<MpLogin></MpLogin>}
     ]

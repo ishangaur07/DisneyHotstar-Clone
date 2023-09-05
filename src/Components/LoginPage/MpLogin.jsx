@@ -3,17 +3,19 @@ import "./Login.css";
 import CloseIcon from '@mui/icons-material/Close';
 function MpLogin({closeModal}) {
   const [phoneNumber, setPhoneNumber] = useState('');
-  
   const handlePhoneNumberChange = (event) => {
     setPhoneNumber(event.target.value);
+    // console.log(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // You can handle the form submission here, e.g., send the phone number to the server.
-    // Then, you can close the modal.
+    
     closeModal();
   };
+
+  
+  const phoneNumberValid = phoneNumber.length === 10;
 
   return (
   
@@ -29,11 +31,11 @@ function MpLogin({closeModal}) {
             <form onSubmit={handleSubmit}>
               <input
                 type='tel'
-                placeholder='Phone Number'
+                placeholder='Enter mobile number'
                 value={phoneNumber}
                 onChange={handlePhoneNumberChange}
               />
-              <button type='submit'>Submit</button>
+              {phoneNumberValid && (<button className='primaryBtn'  type='submit'>Submit</button>)}
             </form>
             </div>
            <div className="helpContent">
