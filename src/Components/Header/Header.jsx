@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Header.css";
 import logo from "./DH-logo.svg";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
@@ -9,6 +9,8 @@ import TvIcon from '@mui/icons-material/Tv';
 import MovieCreationIcon from '@mui/icons-material/MovieCreation';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 function Header() {
+  
+
   return (
     <section>
     <div class="sidebar">
@@ -16,12 +18,54 @@ function Header() {
         <img src={logo} alt="Logo"/>
     </div>
     <ul class="nav">
-      <Link to="/login"><li><span><AccountCircleIcon></AccountCircleIcon></span> <span>My Space</span></li></Link>
-      <Link to="/login"><li><span><SearchIcon></SearchIcon></span> <span>Search</span></li></Link>
-      <Link to="/login"><li><span><HomeIcon></HomeIcon></span> <span>Home</span></li></Link>
-      <Link to="/login"><li><span><TvIcon></TvIcon></span><span>TV</span></li></Link>
-      <Link to="/login"><li><span><MovieCreationIcon></MovieCreationIcon></span> <span>Movies</span></li></Link>
-      <Link to="/login"><li><span><SportsBasketballIcon></SportsBasketballIcon></span> <span>Sports</span></li></Link>
+      <NavLink to="/login">
+        <li>
+          <span className="nav-icon">
+            <AccountCircleIcon></AccountCircleIcon>
+            </span>{' '}
+            <span className="nav-text">My Space</span>
+            </li>
+            </NavLink>
+      <NavLink to="/login">
+        <li>
+          <span className="nav-icon">
+            <SearchIcon></SearchIcon>
+            </span>{' '} 
+            <span className="nav-text">Search</span>
+            </li>
+            </NavLink>
+      <NavLink to="/login">
+        <li>
+          <span className="nav-icon">
+            <HomeIcon></HomeIcon>
+            </span> {' '} 
+            <span className="nav-text">Home</span>
+            </li>
+            </NavLink>
+      <NavLink to="/login">
+        <li>
+          <span className="nav-icon">
+            <TvIcon></TvIcon>
+            </span>{' '} 
+            <span className="nav-text">TV</span>
+            </li>
+            </NavLink>
+      <NavLink to="/login">
+        <li>
+          <span className="nav-icon">
+            <MovieCreationIcon></MovieCreationIcon>
+            </span>{' '}  
+            <span className="nav-text">Movies</span>
+            </li>
+            </NavLink>
+      <NavLink to="/login">
+        <li>
+          <span className="nav-icon">
+            <SportsBasketballIcon></SportsBasketballIcon>
+            </span> {' '} 
+            <span className="nav-text">Sports</span>
+            </li>
+            </NavLink>
        
     </ul>
 </div>

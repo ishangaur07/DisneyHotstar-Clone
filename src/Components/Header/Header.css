@@ -7,9 +7,8 @@ body, html {
 
 /* Style for the sidebar */
 .sidebar {
-  
     height: 100%;
-    background-color: #070707;
+    background-color: #07070700;
     color: white;
     position: fixed;
     top: 0;
@@ -18,13 +17,15 @@ body, html {
     padding-top: 20px;
     display: flex;
     flex-direction: column;
+    width: 100px; /* Set the initial width */
+    transition: width 0.3s; /* Add transition for smooth animation */
 }
 
 /* Style for the logo */
 .logo {
     padding: 20px;
-  
 }
+
 /* Style for the logo */
 .logo img {
     width: 80%;
@@ -37,14 +38,42 @@ body, html {
     list-style: none;
     padding: 0;
     margin: auto;
-    
 }
 
 .nav li {
-    padding: 10px 20px;
+    padding: 10px;
     display: flex;
     align-items: center;
     gap: 6px;
+    transition: opacity 0.3s; /* Add transition for smooth animation */
+    font-weight: 600;
+}
+
+/* Show icons by default when not hovering */
+.nav li .nav-text {
+    display: none;
+}
+
+.sidebar:hover{
+    width: 200px;
+}
+
+/* Hide icons when not hovering */
+.sidebar:hover .nav li .nav-text {
+    display: block;
+   
+}
+
+/* Show both icons and text when hovering */
+.sidebar:hover .nav li {
+    opacity: 1;
+    color: white; /* Set the text color to white */
+}
+
+.nav-text:hover{
+    color: rgb(255, 255, 255);
+    filter: drop-shadow(0 0 20px hsla(0,0%,100%,.6));
+    
 }
 
 .nav a {
@@ -53,11 +82,9 @@ body, html {
     display: block;
 }
 
-
-
 /* Style for the content area */
 .content {
-    margin-left: 250px; /* Width of the sidebar */
+    margin-left: 100px; /* Width of the sidebar */
     padding: 20px;
 }
 
