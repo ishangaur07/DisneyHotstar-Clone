@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import { useLocation } from 'react-router-dom';
 import "./Header.css";
 import logo from "./DH-logo.svg";
 import { NavLink } from 'react-router-dom';
@@ -8,17 +9,25 @@ import HomeIcon from '@mui/icons-material/Home';
 import TvIcon from '@mui/icons-material/Tv';
 import MovieCreationIcon from '@mui/icons-material/MovieCreation';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+
 function Header() {
+  const [isActive, setIsActive] = useState('home');
+  const location = useLocation();
   
+  useEffect(() => {
+    // Extract the slug from the current URL path (e.g., "/about-us" -> "about-us")
+    const slug = location.pathname.split('/')[1];
+    setIsActive(slug || 'home'); // If slug is empty, set 'home' as the active element
+  }, [location]);
 
   return (
     <section>
-    <div class="sidebar">
-    <div class="logo">
+    <div className="sidebar">
+    <div className="logo">
         <img src={logo} alt="Logo"/>
     </div>
     <ul class="nav">
-      <NavLink to="/login">
+      <NavLink to="/login"  className={isActive === 'home' ? 'active' : ''}>
         <li>
           <span className="nav-icon">
             <AccountCircleIcon></AccountCircleIcon>
@@ -26,7 +35,7 @@ function Header() {
             <span className="nav-text">My Space</span>
             </li>
             </NavLink>
-      <NavLink to="/login">
+      <NavLink to="/login" >
         <li>
           <span className="nav-icon">
             <SearchIcon></SearchIcon>
@@ -34,7 +43,7 @@ function Header() {
             <span className="nav-text">Search</span>
             </li>
             </NavLink>
-      <NavLink to="/login">
+      <NavLink to="/">
         <li>
           <span className="nav-icon">
             <HomeIcon></HomeIcon>
@@ -68,11 +77,6 @@ function Header() {
             </NavLink>
        
     </ul>
-</div>
-<div class="content">
-    {/* Your page content goes here */}
-    <h1>Welcome to Your Website</h1>
-    <p>This is the main content area.</p>
 </div>
 </section>
   )

@@ -8,7 +8,7 @@ body, html {
 /* Style for the sidebar */
 .sidebar {
     height: 100%;
-    background-color: #07070700;
+    background-color: #07070762;
     color: white;
     position: fixed;
     top: 0;
@@ -19,6 +19,7 @@ body, html {
     flex-direction: column;
     width: 100px; /* Set the initial width */
     transition: width 0.3s; /* Add transition for smooth animation */
+    z-index: 1;
 }
 
 /* Style for the logo */
@@ -45,7 +46,7 @@ body, html {
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: opacity 0.3s; /* Add transition for smooth animation */
+    transition: opacity 0.8s; /* Add transition for smooth animation */
     font-weight: 600;
 }
 
@@ -55,7 +56,7 @@ body, html {
 }
 
 .sidebar:hover{
-    width: 200px;
+    width: 180px;
 }
 
 /* Hide icons when not hovering */
