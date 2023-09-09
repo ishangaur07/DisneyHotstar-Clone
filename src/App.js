@@ -12,6 +12,7 @@ const routes = createBrowserRouter([
       {path:"/",element:<HomePage></HomePage>},
       {path:"/login",element:[<Header></Header>,<Login></Login>]},
       {path:"#mp-login",element:<MpLogin></MpLogin>}
+      
     ]
   }
 ])

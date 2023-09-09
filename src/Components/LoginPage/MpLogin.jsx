@@ -1,127 +1,107 @@
 import React, { useState } from 'react'
 import "./Login.css";
 import CloseIcon from '@mui/icons-material/Close';
-import { signInWithPhoneNumber } from "firebase/auth";
-import app from '../../Firebase';
-import { getAuth, RecaptchaVerifier,PhoneAuthProvider,signInWithCredential  } from "firebase/auth";
+import { auth } from '../../Firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword,updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 function MpLogin({ closeModal }) {
-  const auth = getAuth(app);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [showSubmitButton, setShowSubmitButton] = useState(false);
-  const [otp, setOtp] = useState('');
+  const [formChange, setFormChange] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const navigate = useNavigate();
-
-  const setUpRecaptcha = () => {
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-      'size': 'invisible',
-      'callback': (response) => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        sendOtp();
-      }
-    });
-  }
-
-  const handlePhoneNumberChange = (event) => {
-    const mobileNumber = event.target.value;
-    setPhoneNumber(mobileNumber);
+  const handleHelpLinkClick = () => {
+    setFormChange(true);
   };
 
-  const handleGetOtp = (event) => {
-    event.preventDefault();
-    setUpRecaptcha();
-    setShowSubmitButton(true); // Show the submit button after clicking "Get OTP"
-    sendOtp();
+  const handleBackToLoginClick = () => {
+    setFormChange(false);
   };
 
-  const sendOtp = () => {
-    const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        window.confirmationResult = confirmationResult;
-      })
-      .catch((error) => {
-        console.log(error);
-        // Handle error, e.g., display an error message to the user
-      });
-  };
 
-  const handleOtpChange = (event) => {
-    setOtp(event.target.value);
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleOtpSubmit = (event) => {
-    event.preventDefault();
-    const verificationId = window.confirmationResult.verificationId;
-    const credential = PhoneAuthProvider.credential(verificationId, otp);
-
-    signInWithCredential(auth, credential)
-      .then((userCredential) => {
+    try {
+      if (formChange) {
+        // Register New User 
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        console.log("User signed in:", user);
-        // You can update the UI, store user data, or redirect the user as needed
-        setPhoneNumber("");
-        setShowSubmitButton(false);
-        setOtp("");
+        // Set the user's display name
+        await updateProfile(user, {
+          displayName: name, // Assuming "name" is the variable that holds the user's name
+        })
+        }else {
+          // Login an existing user
+          await signInWithEmailAndPassword(auth, email, password);
+        }
+
         navigate("/")
+        
+      }catch (error) {
+        console.error(error.message);
+      }
 
-      })
-      .catch((error) => {
-        console.error("Error signing in:", error);
-        // Handle error, e.g., display an error message to the user
-       
-      });
-  };
-// Remember to add proper error handling and user feedback to make the user experience smoother and more informative.
 
+    }
   return (
 
-    <div className='modal'>
-      <div className="combineWrapper">
-        <div className="modalImage">
-
-        </div>
-        <div className='close' onClick={closeModal}><CloseIcon /></div>
-        <div className='modal-content'>
-          <div className="contentHead">
-            <h2>Log in or sign up to continue</h2>
-            <form onSubmit={handleGetOtp}>
-              <div id="recaptcha-container">
-              </div>
-              <input
-                type='tel'
-                placeholder='Enter mobile number'
-                value={phoneNumber}
-                onChange={handlePhoneNumberChange}
-              />
-             <button className='primaryBtn' type='submit' >Get OTP</button>
-            </form>
+      <div className='modal'>
+        <div className="combineWrapper">
+          <div className="modalImage">
           </div>
-          {showSubmitButton && (
-            <form onSubmit={handleOtpSubmit}>
-              <input
-                type='text'
-                placeholder='Enter OTP'
-                value={otp}
-                onChange={handleOtpChange}
-              />
-              <button className='primaryBtn' type='submit'>Submit</button>
-            </form>
+          <div className='close' onClick={closeModal}><CloseIcon /></div>
+          <div className='modal-content'>
+            <div className="contentHead">
+              <h2>Log in or sign up to continue</h2>
+              <form onSubmit={handleSubmit}>
+                {formChange &&
+                  <input
+                    type='text'
+                    placeholder='Name'
+                    onChange={(e)=>setName(e.target.value)}
+
+                  />}
+
+                <input
+                  type='email'
+                  placeholder='Email'
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete=''
+                />
+                <input
+                  type='password'
+                  placeholder='Password'
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete='current-password'
+                />
+                {formChange && <button className='primaryBtn' type='submit'>Register</button>}
+                {!formChange && <button className='primaryBtn' type='submit'>Login</button>}
+              </form>
+            </div>
 
 
-          )}
+            <div className="helpContent">
+              {formChange ? (
+                <p>
+                  Already have an account{' '}
+                  <button className='backToLogin' onClick={handleBackToLoginClick}>Login</button>
+                </p>
+              ) : (
+                <p>
+                  Having trouble logging in?{' '}
+                  <button className='getHelp' onClick={handleHelpLinkClick}>Register</button>
+                </p>
+              )}
+            </div>
 
-          <div className="helpContent">
-            <p>Having trouble logging in? <a href='https://help.hotstar.com/in/en/support/search?term=login'> Get Help</a></p>
           </div>
 
         </div>
 
       </div>
+    )
+  }
 
-    </div>
-  )
-}
-
-export default MpLogin;
+  export default MpLogin;

@@ -56,6 +56,7 @@
     padding: 56px 56px 0 56px;
     display: flex;
     justify-content: flex-end;
+    gap: 20px;
 }
 
 .secondaryBtn{
@@ -177,9 +178,13 @@
     line-height: 24px;
 }
 
-.helpContent a{
+.helpContent button{
     color: #3586f0;
     font-weight: 600;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .contentHead form{
@@ -188,7 +193,7 @@
 
 form{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 15px;
 }
 
