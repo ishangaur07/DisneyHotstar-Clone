@@ -9,10 +9,13 @@ import HomeIcon from '@mui/icons-material/Home';
 import TvIcon from '@mui/icons-material/Tv';
 import MovieCreationIcon from '@mui/icons-material/MovieCreation';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import { useUser } from "../UserContext/UserContext";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function Header() {
   const [isActive, setIsActive] = useState('home');
   const location = useLocation();
+  const {user,logout} = useUser();
   
   useEffect(() => {
     // Extract the slug from the current URL path (e.g., "/about-us" -> "about-us")
@@ -34,7 +37,7 @@ function Header() {
             </span>{' '}
             <span className="nav-text">My Space</span>
             </li>
-            </NavLink>
+        </NavLink>
       <NavLink to="/login" >
         <li>
           <span className="nav-icon">
@@ -73,8 +76,15 @@ function Header() {
             <SportsBasketballIcon></SportsBasketballIcon>
             </span> {' '} 
             <span className="nav-text">Sports</span>
-            </li>
-            </NavLink>
+          </li>
+      </NavLink>
+      {user?(<li>
+          <span className="nav-icon">
+          <LogoutIcon></LogoutIcon>
+            </span> {' '} 
+            <span className="nav-text" onClick={logout}>Log out</span>
+          </li>):("")}
+      
        
     </ul>
 </div>

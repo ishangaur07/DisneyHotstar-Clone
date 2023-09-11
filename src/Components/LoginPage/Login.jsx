@@ -10,6 +10,7 @@ function Login() {
   const [showModal, setShowModal] = useState(false);
   const { user, logout } = useUser();
   console.log(user);
+  //  const [selectedVideo, setSelectedVideo] = useState(null);
   const navigate = useNavigate();
 
   const openModal = () => {
@@ -21,7 +22,13 @@ function Login() {
     setShowModal(false);
     navigate('/login'); // Reset the URL
   };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
 
+  //   if (file) {
+  //     setSelectedVideo(file);
+  //   }
+  // };
 
   return (
     <section className='loginSection'>
@@ -38,9 +45,17 @@ function Login() {
           
         </div>
         {user ? (
-          <button className='primaryBtn' onClick={logout}>Log out</button>
+          <>
+          <button className='primaryBtn'>Upload</button>
+          {/* <input
+          type="file"
+          accept="video/*"
+          onChange={handleFileChange}
+          multiple={false}
+        /> */}
+        </>
         ) : (
-          <button className='primaryBtn' onClick={openModal}>Log In</button>
+          <button className='primaryBtn' onClick={openModal}>Login</button>
         )}
 
       </div>

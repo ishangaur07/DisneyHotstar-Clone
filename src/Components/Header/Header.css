@@ -81,8 +81,14 @@ body, html {
     text-decoration: none;
     color: white;
     display: block;
+    
 }
-
+.nav li{
+    cursor: pointer;
+}
+.active, .dot:hover {
+    background-color: none !important;
+}
 /* Style for the content area */
 .content {
     margin-left: 100px; /* Width of the sidebar */
