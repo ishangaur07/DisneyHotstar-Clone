@@ -4,21 +4,25 @@ import Login from './Components/LoginPage/Login';
 import MpLogin from './Components/LoginPage/MpLogin';
 import HomePage from './Components/HomePage/HomePage';
 import Header from './Components/Header/Header';
+import { useUser } from './Components/UserContext/UserContext';
 
-const routes = createBrowserRouter([
-  {
-    path:"/",
-    children:[
-      {path:"/",element:<HomePage></HomePage>},
-      {path:"/login",element:[<Header></Header>,<Login></Login>]},
-      {path:"#mp-login",element:<MpLogin></MpLogin>}
-      
-    ]
-  }
-])
 
 function App() {
-
+  const {user,logout} = useUser();
+ ;
+  const routes = createBrowserRouter([
+    
+    {
+      
+      path:"/",
+      children:[
+        {path:"/",element:<HomePage></HomePage>},
+        {path: user?("/my-space"):("/login"),element:[<Header></Header>,<Login></Login>]},
+        {path:"#mp-login",element:<MpLogin></MpLogin>}
+        
+      ]
+    }
+  ])
   return (
     <RouterProvider router={routes}></RouterProvider>
   );

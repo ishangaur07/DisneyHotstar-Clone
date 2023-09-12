@@ -30,7 +30,7 @@ function Header() {
         <img src={logo} alt="Logo"/>
     </div>
     <ul class="nav">
-      <NavLink to="/login"  className={isActive === 'home' ? 'active' : ''}>
+      <NavLink to={user?("/my-space"):("/login")}  className={isActive === 'home' ? 'active' : ''}>
         <li>
           <span className="nav-icon">
             <AccountCircleIcon></AccountCircleIcon>
