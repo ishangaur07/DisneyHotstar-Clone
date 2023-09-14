@@ -10,6 +10,7 @@ export function useUser() {
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -32,8 +33,14 @@ export function UserProvider({ children }) {
       console.error(error.message);
     }
   };
+
+  // Add a function to set the selected video in the context
+  const setSelectedVideoFile = (file) => {
+    setSelectedVideo(file);
+    console.log(file);
+  };
   return (
-    <UserContext.Provider value={{ user,logout }}>
+    <UserContext.Provider value={{ user, logout, selectedVideo, setSelectedVideoFile}}>
       {children}
     </UserContext.Provider>
   );
