@@ -2,13 +2,14 @@ import React, { useState, useRef } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import "./Upload.css";
 import { useUser } from '../UserContext/UserContext';
-
+import { storage } from '../../Firebase';
 function Upload({ closeModal }) {
   const [videoFile, setVideoFile] = useState(null);
   const [error, setError] = useState('');
   const dropAreaRef = useRef(null);
   const inputRef = useRef(null);
-  const { setSelectedVideoFile } = useUser(); // Access the context function
+  const { selectedVideo,setSelectedVideoFile } = useUser(); // Access the context function
+  const {user,logout} = useUser();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -36,9 +37,38 @@ function Upload({ closeModal }) {
     }
   };
 
-  const handleSubmit = () => {
-    // Perform video upload logic here
-    closeModal();
+  const handleSubmit = async () => {
+    if (videoFile) {
+      try {
+        // Create a reference to Firebase Storage
+        const storageRef = storage.ref();
+        // Generate a unique file name or use your preferred naming strategy
+        const fileName = `${Date.now()}_${videoFile.name}`;
+        const videoFileRef = storageRef.child(`videos/${fileName}`);
+
+        // Upload the video file to Firebase Storage
+        await videoFileRef.put(videoFile);
+
+        // Get the download URL of the uploaded video
+        const downloadURL = await videoFileRef.getDownloadURL();
+
+        // Now, you can store the downloadURL in Firebase Realtime Database
+        const response = await fetch("https://disneyhotstarclone-b1102-default-rtdb.asia-southeast1.firebasedatabase.app/users.json", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: user.displayName,
+            videoURL: downloadURL // Store the download URL
+          })
+        });
+
+        console.log(user.displayName, downloadURL);
+      } catch (error) {
+        console.error("Error uploading video:", error);
+      }
+    }
   };
 
   return (

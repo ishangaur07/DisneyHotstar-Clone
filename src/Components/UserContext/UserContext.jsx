@@ -4,7 +4,7 @@ import { auth } from '../../Firebase'; // Import your Firebase configuration
 
 const UserContext = createContext();
 
-export function useUser() {
+export function useUser() { 
   return useContext(UserContext);
 }
 
@@ -37,7 +37,7 @@ export function UserProvider({ children }) {
   // Add a function to set the selected video in the context
   const setSelectedVideoFile = (file) => {
     setSelectedVideo(file);
-    console.log(file);
+    console.log("The context file",file);
   };
   return (
     <UserContext.Provider value={{ user, logout, selectedVideo, setSelectedVideoFile}}>
