@@ -3,13 +3,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import "./Upload.css";
 import { useUser } from '../UserContext/UserContext';
 import { storage } from '../../Firebase';
+import { ref,getDownloadURL,uploadBytes } from "firebase/storage";
+
 function Upload({ closeModal }) {
   const [videoFile, setVideoFile] = useState(null);
   const [error, setError] = useState('');
   const dropAreaRef = useRef(null);
   const inputRef = useRef(null);
-  const { selectedVideo,setSelectedVideoFile } = useUser(); // Access the context function
-  const {user,logout} = useUser();
+  const { setSelectedVideoFile } = useUser(); // Access the context function
+  const { user } = useUser();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -38,21 +40,22 @@ function Upload({ closeModal }) {
   };
 
   const handleSubmit = async () => {
-    if (videoFile) {
+    if (videoFile && user) {
       try {
+        // Define the path for the uploaded file in Firebase Storage
+        const path = `videos/${Date.now()}_${videoFile.name}`;
+  
         // Create a reference to Firebase Storage
-        const storageRef = storage.ref();
-        // Generate a unique file name or use your preferred naming strategy
-        const fileName = `${Date.now()}_${videoFile.name}`;
-        const videoFileRef = storageRef.child(`videos/${fileName}`);
-
+        const storageRef = ref(storage, `videos/${Date.now()}_${videoFile.name}`); // Reference to the video file in storage
+  
         // Upload the video file to Firebase Storage
-        await videoFileRef.put(videoFile);
-
+        await uploadBytes(storageRef, videoFile);
+  
         // Get the download URL of the uploaded video
-        const downloadURL = await videoFileRef.getDownloadURL();
+        const downloadURL = await getDownloadURL(storageRef);
+        console.log("This is download url",downloadURL);
 
-        // Now, you can store the downloadURL in Firebase Realtime Database
+       // Now, you can store the downloadURL in Firebase Realtime Database
         const response = await fetch("https://disneyhotstarclone-b1102-default-rtdb.asia-southeast1.firebasedatabase.app/users.json", {
           method: 'POST',
           headers: {
@@ -84,8 +87,7 @@ function Upload({ closeModal }) {
             onDragOver={(e) => e.preventDefault()}
           >
             <p>
-              Drag and drop video files to upload. Your videos will be private
-              until you publish them.
+              Upload whats vrial for you
             </p>
             <button onClick={handleSelectFile}>Select a video</button>
             <input

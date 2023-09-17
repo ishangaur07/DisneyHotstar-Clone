@@ -13,7 +13,6 @@ function App() {
 
   const routes = createBrowserRouter([
     {
-      
       path:"/",
       children:[
         {path:"/",element:<HomePage></HomePage>},
