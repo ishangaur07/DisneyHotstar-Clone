@@ -30,3 +30,53 @@
     justify-content: center;
     align-items: center;
 }
+
+.drop-area{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.file-upload{
+    font-size: 45px;
+}
+.drop-area .f-button{
+    background-image: linear-gradient(93.87deg,#095ae6,#062794);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    padding: 12px;
+    line-height: 28px;
+    font-weight: 500;
+    width: 15rem;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+
+.f-button:hover{
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.384);
+}
+
+.selected-video .U-button{
+    background-image: linear-gradient(93.87deg,#095ae6,#062794);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    padding: 12px;
+    line-height: 28px;
+    font-weight: 500;
+    width: 15rem;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.UC-buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}

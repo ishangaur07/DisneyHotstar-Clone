@@ -3,7 +3,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import "./Upload.css";
 import { useUser } from '../UserContext/UserContext';
 import { storage } from '../../Firebase';
-import { ref,getDownloadURL,uploadBytes } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 function Upload({ closeModal }) {
   const [videoFile, setVideoFile] = useState(null);
@@ -12,6 +13,7 @@ function Upload({ closeModal }) {
   const inputRef = useRef(null);
   const { setSelectedVideoFile } = useUser(); // Access the context function
   const { user } = useUser();
+  const [videoSelect, setVideoSelect] = useState(false);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -23,8 +25,11 @@ function Upload({ closeModal }) {
         setError('');
         setVideoFile(file);
         setSelectedVideoFile(file);
+       
       }
+      setVideoSelect(true);
     }
+
   };
 
   const handleDrop = (e) => {
@@ -37,6 +42,7 @@ function Upload({ closeModal }) {
     if (inputRef.current) {
       inputRef.current.click();
     }
+   
   };
 
   const handleSubmit = async () => {
@@ -44,18 +50,18 @@ function Upload({ closeModal }) {
       try {
         // Define the path for the uploaded file in Firebase Storage
         const path = `videos/${Date.now()}_${videoFile.name}`;
-  
+
         // Create a reference to Firebase Storage
         const storageRef = ref(storage, `videos/${Date.now()}_${videoFile.name}`); // Reference to the video file in storage
-  
+
         // Upload the video file to Firebase Storage
         await uploadBytes(storageRef, videoFile);
-  
+
         // Get the download URL of the uploaded video
         const downloadURL = await getDownloadURL(storageRef);
-        console.log("This is download url",downloadURL);
+        console.log("This is download url", downloadURL);
 
-       // Now, you can store the downloadURL in Firebase Realtime Database
+        // Now, you can store the downloadURL in Firebase Realtime Database
         const response = await fetch("https://disneyhotstarclone-b1102-default-rtdb.asia-southeast1.firebasedatabase.app/users.json", {
           method: 'POST',
           headers: {
@@ -74,12 +80,17 @@ function Upload({ closeModal }) {
     }
   };
 
+  const handleCancel = ()=>{
+    console.log("A cancel button");
+  }
+
   return (
     <section className='upload-popup'>
       <div className='close' onClick={closeModal}><CloseIcon /></div>
       <div className='upload-wrapper'>
         <div className="upload-input-container">
           {error && <p className='error'>{error}</p>}
+
           <div
             className='drop-area'
             ref={dropAreaRef}
@@ -89,7 +100,8 @@ function Upload({ closeModal }) {
             <p>
               Upload whats vrial for you
             </p>
-            <button onClick={handleSelectFile}>Select a video</button>
+            <FileUploadIcon className='file-upload'></FileUploadIcon>
+            <button className='f-button' onClick={handleSelectFile}>Find that video</button>
             <input
               type='file'
               accept='video/*'
@@ -98,14 +110,18 @@ function Upload({ closeModal }) {
               onChange={handleFileChange}
             />
           </div>
+
           {videoFile && (
             <div className='selected-video'>
-              <p>Selected Video:</p>
               <video controls width="400" height="300">
                 <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-              <button onClick={handleSubmit}>Upload</button>
+              <div className="UC-buttons">
+              <button className='U-button' onClick={handleSubmit}>Upload</button>
+              <button className='U-button' onClick={handleCancel}>Cancel</button>
+              </div>
+             
             </div>
           )}
         </div>
