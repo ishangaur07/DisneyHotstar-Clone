@@ -72,7 +72,7 @@ function Upload({ closeModal }) {
             videoURL: downloadURL // Store the download URL
           })
         });
-
+        setVideoFile(null)
         console.log(user.displayName, downloadURL);
       } catch (error) {
         console.error("Error uploading video:", error);
@@ -81,6 +81,7 @@ function Upload({ closeModal }) {
   };
 
   const handleCancel = ()=>{
+    setVideoFile(null);
     console.log("A cancel button");
   }
 
@@ -113,7 +114,7 @@ function Upload({ closeModal }) {
 
           {videoFile && (
             <div className='selected-video'>
-              <video controls width="400" height="300">
+              <video controls width="100%" height="300">
                 <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
