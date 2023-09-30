@@ -14,16 +14,21 @@ function HomePage() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        const videoLinks = [];
+        const videoData  = [];
 
         // Extract video URLs from the user data
         for (const key in data) {
           if (data.hasOwnProperty(key) && data[key].videoURL) {
-            videoLinks.push(data[key].videoURL);
+            const video = {
+              title: data[key].videoTitle, // Replace with the actual key for video titles
+              description: data[key].videoDesc, // Replace with the actual key for video descriptions
+              videoURL: data[key].videoURL,
+            };
+            videoData.push(video);
           }
         }
 
-        setVideos(videoLinks);
+        setVideos(videoData);
       } catch (error) {
         console.error('Error fetching video links:', error);
       }
@@ -36,14 +41,17 @@ function HomePage() {
     <>
     <Header></Header>
     <div className="home-page">
-      <h1>All Videos</h1>
+      <h1>The Trends</h1>
       <div className="video-list">
-        {videos.map((videoLink, index) => (
+        {videos.map((video, index) => (
           <div key={index} className="video-container">
+            
             <video controls width="auto" height="300">
-              <source src={videoLink} type="video/mp4" />
+              <source src={video.videoURL} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+            <h2>{video.title}</h2>
+            <p>{video.description}</p>
           </div>
         ))}
       </div>

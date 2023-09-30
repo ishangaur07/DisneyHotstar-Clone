@@ -54,30 +54,30 @@ function Header() {
             <span className="nav-text">Home</span>
             </li>
             </NavLink>
-      <NavLink to="/login">
+      {/* <NavLink to="/login">
         <li>
           <span className="nav-icon">
             <TvIcon></TvIcon>
             </span>{' '} 
             <span className="nav-text">TV</span>
             </li>
-            </NavLink>
-      <NavLink to="/login">
+            </NavLink> */}
+      {/* <NavLink to="/login">
         <li>
           <span className="nav-icon">
             <MovieCreationIcon></MovieCreationIcon>
             </span>{' '}  
             <span className="nav-text">Movies</span>
             </li>
-            </NavLink>
-      <NavLink to="/login">
+            </NavLink> */}
+      {/* <NavLink to="/login">
         <li>
           <span className="nav-icon">
             <SportsBasketballIcon></SportsBasketballIcon>
             </span> {' '} 
             <span className="nav-text">Sports</span>
           </li>
-      </NavLink>
+      </NavLink> */}
       {user?(<li>
           <span className="nav-icon">
           <LogoutIcon></LogoutIcon>

@@ -5,6 +5,7 @@ import { useUser } from '../UserContext/UserContext';
 import { storage } from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { useNavigate } from 'react-router-dom';
 
 function Upload({ closeModal }) {
   const [videoFile, setVideoFile] = useState(null);
@@ -14,6 +15,13 @@ function Upload({ closeModal }) {
   const { setSelectedVideoFile } = useUser(); // Access the context function
   const { user } = useUser();
   const [videoSelect, setVideoSelect] = useState(false);
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoDesc, setVideoDesc] = useState("");
+  const [isInputEmpty, setInputEmpty] = useState(true);
+  const [isTitleEmpty, setTitleEmpty] = useState(true);
+  const [isDescEmpty, setDescEmpty] = useState(true);
+
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -25,7 +33,7 @@ function Upload({ closeModal }) {
         setError('');
         setVideoFile(file);
         setSelectedVideoFile(file);
-       
+
       }
       setVideoSelect(true);
     }
@@ -42,7 +50,7 @@ function Upload({ closeModal }) {
     if (inputRef.current) {
       inputRef.current.click();
     }
-   
+
   };
 
   const handleSubmit = async () => {
@@ -69,21 +77,30 @@ function Upload({ closeModal }) {
           },
           body: JSON.stringify({
             name: user.displayName,
-            videoURL: downloadURL // Store the download URL
+            videoURL: downloadURL, // Store the download URL
+            videoTitle: videoTitle,
+            videoDesc: videoDesc
           })
         });
         setVideoFile(null)
         console.log(user.displayName, downloadURL);
+        navigate("/")
       } catch (error) {
         console.error("Error uploading video:", error);
       }
     }
   };
 
-  const handleCancel = ()=>{
+  const handleCancel = () => {
     setVideoFile(null);
     console.log("A cancel button");
+    navigate("/");
+
   }
+  // Function to check if either the videoTitle or videoDesc is empty
+  const isEitherInputEmpty = () => {
+    return videoTitle.trim() === '' || videoDesc.trim() === '';
+  };
 
   return (
     <section className='upload-popup'>
@@ -91,8 +108,7 @@ function Upload({ closeModal }) {
       <div className='upload-wrapper'>
         <div className="upload-input-container">
           {error && <p className='error'>{error}</p>}
-
-          <div
+          {!videoSelect && <div
             className='drop-area'
             ref={dropAreaRef}
             onDrop={handleDrop}
@@ -110,24 +126,53 @@ function Upload({ closeModal }) {
               style={{ display: 'none' }}
               onChange={handleFileChange}
             />
-          </div>
+          </div>}
+
 
           {videoFile && (
-            <div className='selected-video'>
-              <video controls width="100%" height="300">
-                <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div className="UC-buttons">
-              <button className='U-button' onClick={handleSubmit}>Upload</button>
-              <button className='U-button' onClick={handleCancel}>Cancel</button>
+            <>
+              <div className='selected-video'>
+                <video controls width="100%" height="300">
+                  <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
-             
-            </div>
+              <div className="video-desc">
+                <input
+                  type="text"
+                  name="Video Title"
+                  placeholder='Video title'
+                  className={isTitleEmpty ? 'empty-field' : ''}
+                  onChange={(e) => {
+                    setVideoTitle(e.target.value);
+                    setTitleEmpty(isEitherInputEmpty());
+                    setInputEmpty(isEitherInputEmpty());
+                    console.log('isTitleEmpty:', isTitleEmpty);
+                  }}
+                  required />
+
+                <input
+                  type="text"
+                  placeholder='Video description'
+                  className={isDescEmpty ? 'empty-field' : ''}
+                  onChange={(e) => {
+                    setVideoDesc(e.target.value)
+                    setDescEmpty(isEitherInputEmpty());
+                    setInputEmpty(isEitherInputEmpty());
+                  }} />
+
+                <div className="UC-buttons">
+                {!isInputEmpty && (
+                    <button className='U-button' onClick={handleSubmit}>Upload</button>
+                  )}
+                  <button className='U-button' onClick={handleCancel}>Cancel</button>
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>
-    </section>
+    </section >
   );
 }
 
